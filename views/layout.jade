@@ -1,0 +1,31 @@
+doctype  html
+html(lang="en")
+head
+  title
+  meta(charset="utf-8")
+  meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
+  link(rel="shortcut icon", href="/static/images/favicon.ico")
+  link(rel="stylesheet", type="text/css", href="/static/css/site.css" )
+body
+  header
+    .container
+      #Header(style="display:none", data-bind="visible: true")
+        .banner
+          a(href="/")
+            h3
+              span Code
+              span Quest
+        .menu
+          ul.nav
+            li(data-bind="css:{'active': isSelected(['', 'posts'])}")
+              a(href="/") Blog
+            li(data-bind="css:{'active': isSelected(['', 'posts'])}")
+              a(href="/learn") Learn
+      #Content(style="display: none" data-bind="visible: true")
+        block Content
+      #Footer
+
+  block Scripts
+  script(src="/static/js/lib.js")
+  script(data-main="/static/js/main.js" src="/static/js/require.js")
+  block Templates

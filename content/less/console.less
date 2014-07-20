@@ -1,0 +1,61 @@
+﻿#Console {
+    margin-top: 30px;
+    .make-row();
+
+    .console-header {
+        text-align:left;
+
+        @media(min-width: @screen-xs-max) {
+            text-align:center;
+        }
+
+        h2 {
+            color: @site-theme-color;
+            margin: 0;
+        }
+
+        h4 {
+            margin-top: 0;
+            font-size: 0.8em;
+        }
+    }
+
+    #ConsolePanel,
+    #SourceCode,
+    #Output {
+        .make-md-column(12);
+    }
+
+    #Output,
+    #SourceCode {
+        border: solid 1px #000;
+        border-radius: 4px;
+    }
+
+    #SourceCode {
+        position: relative;
+        padding: 0;
+
+        textarea {
+            height: 300px;
+        }
+
+        > div {
+            padding: 10px;
+        }
+    }
+
+    #ConsolePanel {
+        > div {
+            padding: 10px 0;
+            text-align: right;
+        }
+        padding-left:0;
+        padding-right:0;
+    }
+
+    #Output {
+        min-height: 100px;
+        margin-bottom:10px;
+    }
+}
