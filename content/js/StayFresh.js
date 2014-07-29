@@ -1,4 +1,4 @@
-define(['ko', 'ViewModel', 'models/Refresher'],
+require.ensure(['knockout', './ViewModel', './models/Refresher'],
     function (ko, ViewModel, Refresher) {
         var StayFresh = function () {
             var self = this;
@@ -22,5 +22,6 @@ define(['ko', 'ViewModel', 'models/Refresher'],
                 self.PageTitle(self.Refresher().Title());
             }
         };
-        return StayFresh;
+
+        module.exports = StayFresh;
     });

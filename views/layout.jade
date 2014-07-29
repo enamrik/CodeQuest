@@ -1,31 +1,29 @@
 doctype  html
 html(lang="en")
 head
-  title
+  title Code Quest
   meta(charset="utf-8")
   meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
-  link(rel="shortcut icon", href="/static/images/favicon.ico")
+  link(rel="icon", href="favicon.ico")
   link(rel="stylesheet", type="text/css", href="/static/css/site.css" )
 body
   header
     .container
-      #Header(style="display:none", data-bind="visible: true")
-        .banner
-          a(href="/")
-            h3
-              span Code
-              span Quest
-        .menu
-          ul.nav
-            li(data-bind="css:{'active': isSelected(['', 'posts'])}")
-              a(href="/") Blog
-            li(data-bind="css:{'active': isSelected(['', 'posts'])}")
-              a(href="/learn") Learn
+      #Header(style="display: none" data-bind="visible: true")
+        div
+          .banner
+            a(href="/")
+              h3
+                span Code
+                span Quest
       #Content(style="display: none" data-bind="visible: true")
         block Content
-      #Footer
+  #Footer(style="display: none" data-bind="visible: true")
+    .container
+      div
+        | Copyright © 2014 Kirmanie L Ravariere
 
+  script var CodeQuest = {data: {}};
   block Scripts
-  script(src="/static/js/lib.js")
-  script(data-main="/static/js/main.js" src="/static/js/require.js")
+
   block Templates

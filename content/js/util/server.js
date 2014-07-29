@@ -1,4 +1,4 @@
-define(['../../lib/jquery'], function ($) {
+define(['jquery'], function ($) {
 
     function get(url, data) {
         return ajax(url, "GET", data);

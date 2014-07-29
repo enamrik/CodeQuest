@@ -1,10 +1,18 @@
 var gulp = require('gulp');
 var less = require('gulp-less');
-var concat = require('gulp-concat');
+var webpack = require('webpack');
+var gutil = require('gulp-util');
 var clean = require('rimraf');
+var path = require('path');
 
-gulp.task('clean', function(cb){
-    clean('./public',{force: true}, cb);
+gulp.task('clean', function(callback){
+    clean('./public',{force: true}, callback);
+});
+
+gulp.task('images', ['clean'], function(){
+    gulp
+        .src('./content/images/**/*.*')
+        .pipe(gulp.dest('./public/images'));
 });
 
 gulp.task('less', ['clean'], function () {
@@ -14,27 +22,27 @@ gulp.task('less', ['clean'], function () {
         .pipe(gulp.dest('./public/css'));
 });
 
-gulp.task('js', ['clean'], function(){
-    gulp
-        .src([
-            './content/js/lib/jquery.js',
-            './content/js/lib/bootstrap.js',
-            './content/js/lib/knockout.js',
-            './content/js/lib/mapping.js',
-            './content/js/lib/moment.js',
-            './content/js/lib/underscore.js'
-        ])
-        .pipe(concat('lib.js'))
-        .pipe(gulp.dest('./public/js'));
-    gulp
-        .src('./content/js/main.js')
-        .pipe(gulp.dest('./public/js'));
-    gulp
-        .src(['./content/js/lib/require.js'])
-        .pipe(gulp.dest('./public/js'));
+gulp.task('js', ['clean'], function(callback){
+    webpack({
+        entry: {
+            blog: './content/js/blog.js',
+            fresh: './content/js/stayfresh.js'
+        },
+        output: {
+            path: path.join(__dirname, "public/js"),
+            publicPath: '/static/js/',
+            filename: "[name].app.js"
+        }
+    }, function(err, stats) {
+
+        if(err) throw new gutil.PluginError("webpack", err);
+        gutil.log("[webpack]", stats.toString());
+
+        callback();
+    });
 });
 
-gulp.task('default', ['clean','less', 'js']);
+gulp.task('default', ['clean','less', 'js', 'images']);
 
 gulp.task('watch', ['default'], function(){
     gulp.watch(['./content/less/**/*.less', './content/js/**/*.js'], ['default']);

@@ -48,6 +48,25 @@ a {
     }
 }
 
+.wrap{
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+}
+
+#Footer {
+  height:60px;
+  background-color:darken(@site-theme-color, 10%);
+
+  > div {
+
+    background-color:inherit;
+    padding-top:25px;
+    text-align: center;
+    color:#fff;
+  }
+}
+
 .container {
     background-color: @blog-background-color;
 
@@ -144,6 +163,7 @@ a {
         }
     }
 }
+
 
 #Content {
     .make-md-column(12);

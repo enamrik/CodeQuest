@@ -1,7 +1,30 @@
 extends layout
 
 block Content
+  #Blog
+    .post(data-bind="with: currentPost")
+      .post-header
+        h2(data-bind="text: title")
+        span.posted-on(data-bind="text: displayPostedOn()")
+      div
+        p(data-bind="html: content")
+      .comments
+        #disqus_thread
+        noscript Please enable JavaScript to view the
+          a(href="http://disqus.com/?ref_noscript") comments powered by Disqus.
+        a(href="http://disqus.com" class="dsq-brlink") comments powered by
+          span(class="logo-disqus") Disqus
+    .posts-nearby
+      .form-group
+        img.loading(data-bind="visible: inProgress" src="/static/images/ajax-loader-alt.gif")
+        input#search(data-bind='value: searchText, valueUpdate: "afterkeydown"' type="text" class="form-control" placeholder="Find post...")
+      ul(class="nav nav-pills nav-stacked" data-bind="foreach: postsInRange")
+        li(data-bind="css:{'active': $parent.isCurrentPost($data)}")
+          a(href="#" data-bind="attr:{href: $parent.postsInRangeUrl($data)}")
+            span(class="post-list-text" data-bind="text: title")
+            span(class="post-list-date" data-bind="text: displayPostedOn()")
 
 block Scripts
-
-block Templates
+  script CodeQuest.data =
+    != model
+  script(src="/static/js/blog.app.js")
