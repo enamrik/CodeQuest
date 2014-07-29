@@ -1,7 +1,7 @@
 {
   "name": "codequest",
   "scripts": {
-    "start": "npm install;gulp --prod;forever stopall;forever start app.js --port 80",
+    "start": "nvm use 0.10.29;npm install;gulp --prod;forever stopall;forever start app.js --port 80",
     "dev": "forever stopall;forever start --watch --watchDirectory `pwd` app.js;gulp watch"
   },
   "dependencies": {

@@ -18,7 +18,7 @@ gulp.task('images', ['clean'], function(){
 gulp.task('less', ['clean'], function () {
     gulp
         .src('./content/less/site.less')
-        .pipe(less())
+        .pipe(less({compress: gutil.env.prod}))
         .pipe(gulp.dest('./public/css'));
 });
 
