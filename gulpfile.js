@@ -23,16 +23,22 @@ gulp.task('less', ['clean'], function () {
 });
 
 gulp.task('js', ['clean'], function(callback){
+
+    var plugins = [];
+    if(gutil.env.prod){
+       plugins.push(new webpack.optimize.UglifyJsPlugin())
+    }
+
     webpack({
         entry: {
-            blog: './content/js/blog.js',
-            fresh: './content/js/stayfresh.js'
+            blog: './content/js/blog.js'
         },
         output: {
             path: path.join(__dirname, "public/js"),
             publicPath: '/static/js/',
             filename: "[name].app.js"
-        }
+        },
+        plugins: plugins
     }, function(err, stats) {
 
         if(err) throw new gutil.PluginError("webpack", err);
