@@ -1,10 +1,12 @@
 {
   "name": "codequest",
   "scripts": {
-    "start": "forever stopall;forever start --watch --watchDirectory `pwd` app.js;gulp watch"
+    "start": "forever stopall;forever start app.js --port 80",
+    "dev": "forever stopall;forever start --watch --watchDirectory `pwd` app.js;gulp watch"
   },
   "dependencies": {
     "bluebird": "^2.2.2",
+    "commander": "^2.3.0",
     "express": "^4.6.1",
     "glob": "^4.0.4",
     "gulp": "^3.8.6",

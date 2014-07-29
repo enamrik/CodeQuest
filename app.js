@@ -2,7 +2,15 @@ var express = require('express'),
     app = express(),
     storage = require('./domain/storage')
     path = require('path'),
-    favicon = require('serve-favicon');
+    favicon = require('serve-favicon'),
+    program = require('commander');
+
+program
+    .version('0.0.1')
+    .option('-p, --port <n>', 'Port to listen on', parseInt)
+    .parse(process.argv);
+
+var port = program.port || 3000;
 
 function initialize(){
     app.use(favicon(path.join(__dirname, 'public/images/favicon.ico')));
@@ -14,8 +22,8 @@ function initialize(){
 
     app.use('/', require('./routes/blog'));
 
-    app.listen(3000, function(){
-        console.log("Listening on port 3000...");
+    app.listen(port, function(){
+        console.log("Listening on port %j...", port);
     });
 }
 
