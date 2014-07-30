@@ -21,7 +21,9 @@
             });
         });
 
-        this._setupComments();
+        if(this.currentPost.enableComments){
+            this._setupComments();
+        }
     };
 
     Blog.prototype._setupComments = function() {

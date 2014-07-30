@@ -8,8 +8,8 @@ Blog.prototype.lastPost = function(){
    return this.store.posts.findOne({}, {"sort":[["postedOn", "desc"]]});
 }
 
-Blog.prototype.postsCloseTo = function(coordinate){
-    return this.store.posts.find({ 'coordinates':{ $near : [ coordinate, 0]} }).toArray();
+Blog.prototype.postsCloseTo = function(position){
+    return this.store.posts.find({ 'coordinates':{ $near : [ position, 0]} }).limit(5).toArray();
 }
 
 Blog.prototype.getPostByShortTitle = function(shortTile){

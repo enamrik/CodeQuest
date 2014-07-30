@@ -1,7 +1,7 @@
 {
   "name": "codequest",
   "scripts": {
-    "start": "nvm use 0.10.29;npm install;gulp --prod;forever stopall;forever start app.js --port 80",
+    "start": "forever stopall;npm install;gulp --prod;forever start app.js --prod --port 80",
     "dev": "forever stopall;forever start --watch --watchDirectory `pwd` app.js;gulp watch"
   },
   "dependencies": {
@@ -11,11 +11,8 @@
     "express": "^4.6.1",
     "glob": "^4.0.4",
     "gulp": "^3.8.6",
-    "gulp-concat": "^2.3.3",
     "gulp-less": "^1.3.1",
-    "gulp-rimraf": "^0.1.0",
     "gulp-util": "^3.0.0",
-    "gulp-webpack": "^0.1.0",
     "jade": "^1.4.2",
     "jquery": "^2.1.1",
     "knockout": "^3.1.0",
@@ -23,10 +20,6 @@
     "markdown": "^0.5.0",
     "moment": "^2.7.0",
     "mongodb": "^1.4.7",
-    "mongojs": "^0.13.0",
-    "mongoskin": "^1.4.4",
-    "monk": "^0.9.0",
-    "q": "^1.0.1",
     "rimraf": "^2.2.8",
     "serve-favicon": "^2.0.1",
     "underscore": "^1.6.0",

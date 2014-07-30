@@ -2,6 +2,7 @@ function Post(args){
     this.title = args.title;
     this.postedOn = args.postedOn;
     this.content = args.content;
+    this.enableComments = args.enableComments;
 
     this.shortTitle = (args.title || "")
         .toLowerCase()

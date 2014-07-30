@@ -117,6 +117,11 @@ function Cursor(cursor){
     this.cursor = cursor;
 }
 
+Cursor.prototype.limit = function(value){
+    this.cursor = this.cursor.limit(value);
+    return this;
+};
+
 Cursor.prototype.toArray = function(){
     var self = this;
    return new Promise(function(resolve, reject){

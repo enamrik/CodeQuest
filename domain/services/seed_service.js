@@ -28,10 +28,13 @@ function insertNewPost(file, markdown){
 
 function newPost(seedFile, markdown){
     var parts = path.basename(seedFile).match(/^([0-9]{8})-(.+)$/);
+    var title = parts[2].match(/^(.*).md$/)[1];
+
     return new Post({
-        title: parts[2].match(/^(.*).md$/)[1],
+        title: title,
         postedOn: parseDate(parts[1]),
-        content: markdown
+        content: markdown,
+        enableComments: !/.*Design\ Patterns\ -.*/.test(title)
     });
 }
 
