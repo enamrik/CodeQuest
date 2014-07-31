@@ -5,11 +5,28 @@
 @blog-menu-active-color: @site-theme-color;
 @blog-background-color: #fff;
 
-body {
-    > header {
-        border-top: 2px solid @site-theme-color;
-    }
+body, html{
+  height:100%;
 }
+
+body > header {
+  border-top: 2px solid @site-theme-color;
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  /* Negative indent footer by it's height */
+  margin: 0 auto -60px;
+}
+
+
+#Footer {
+  height:60px;
+  line-height: 60px;
+  background-color:darken(@site-theme-color, 10%);
+  text-align: center;
+  color:#fff;
+}
+
 
 .form-control:focus {
     border-color: @site-theme-color;
@@ -39,35 +56,12 @@ button {
     }
 }
 
-
 a {
     color: @site-theme-color;
 
     &:hover, &:focus {
         color: darken(@site-theme-color, 10%);
     }
-}
-
-.wrap{
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
-}
-
-#Footer {
-  height:60px;
-  background-color:darken(@site-theme-color, 10%);
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-
-  > div {
-
-    background-color:inherit;
-    padding-top:25px;
-    text-align: center;
-    color:#fff;
-  }
 }
 
 .container {
