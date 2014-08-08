@@ -5,21 +5,25 @@ var gutil = require('gulp-util');
 var clean = require('rimraf');
 var path = require('path');
 
+function path_from(p){
+   return './' + p;
+}
+
 gulp.task('clean', function(callback){
-    clean('./public',{force: true}, callback);
+    clean(path_from('public'),{force: true}, callback);
 });
 
 gulp.task('images', ['clean'], function(){
     gulp
         .src('./content/images/**/*.*')
-        .pipe(gulp.dest('./public/images'));
+        .pipe(gulp.dest(path_from('public/images')));
 });
 
 gulp.task('less', ['clean'], function () {
     gulp
-        .src('./content/less/site.less')
+        .src(path_from('content/less/site.less'))
         .pipe(less({compress: gutil.env.prod}))
-        .pipe(gulp.dest('./public/css'));
+        .pipe(gulp.dest(path_from('public/css')));
 });
 
 gulp.task('js', ['clean'], function(callback){
@@ -31,7 +35,7 @@ gulp.task('js', ['clean'], function(callback){
 
     webpack({
         entry: {
-            blog: './content/js/blog.js'
+            blog: path_from('content/js/blog.js')
         },
         output: {
             path: path.join(__dirname, "public/js"),
@@ -51,5 +55,5 @@ gulp.task('js', ['clean'], function(callback){
 gulp.task('default', ['clean','less', 'js', 'images']);
 
 gulp.task('watch', ['default'], function(){
-    gulp.watch(['./content/less/**/*.less', './content/js/**/*.js'], ['default']);
+    gulp.watch([path_from('content/less/**/*.less'), path_from('content/js/**/*.js')], ['default']);
 });

@@ -1,8 +1,9 @@
 {
   "name": "codequest",
   "scripts": {
-    "start": "forever stopall;npm install;gulp --prod;forever start app.js --prod --port 80",
-    "dev": "forever stopall;forever start --watch --watchDirectory `pwd` app.js;gulp watch"
+    "start": "forever stopall;npm install;gulp --prod;forever start app/app.js --prod --port 80",
+    "dev": "forever stopall;forever start --watch --watchDirectory `pwd` app.js;gulp watch",
+    "db": "mongod --dbpath mongo/data --logpath mongo/log/data.log --fork"
   },
   "dependencies": {
     "bluebird": "^2.2.2",
@@ -20,6 +21,7 @@
     "markdown": "^0.5.0",
     "moment": "^2.7.0",
     "mongodb": "^1.4.7",
+    "restler": "^3.2.2",
     "rimraf": "^2.2.8",
     "serve-favicon": "^2.0.1",
     "underscore": "^1.6.0",
