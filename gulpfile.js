@@ -6,7 +6,7 @@ var clean = require('rimraf');
 var path = require('path');
 
 function path_from(p){
-   return './' + p;
+   return './app/' + p;
 }
 
 gulp.task('clean', function(callback){
@@ -15,7 +15,7 @@ gulp.task('clean', function(callback){
 
 gulp.task('images', ['clean'], function(){
     gulp
-        .src('./content/images/**/*.*')
+        .src(path_from('content/images/**/*.*'))
         .pipe(gulp.dest(path_from('public/images')));
 });
 
@@ -38,7 +38,7 @@ gulp.task('js', ['clean'], function(callback){
             blog: path_from('content/js/blog.js')
         },
         output: {
-            path: path.join(__dirname, "public/js"),
+            path: path_from("public/js"),
             publicPath: '/static/js/',
             filename: "[name].app.js"
         },
