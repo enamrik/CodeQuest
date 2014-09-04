@@ -1,6 +1,6 @@
 var express = require('express'),
     app = express(),
-    storage = require('./domain/storage')
+    storage = require('./domain/storage'),
     path = require('path'),
     favicon = require('serve-favicon'),
     program = require('commander'),
@@ -78,7 +78,7 @@ function emptyDatabase(){
 }
 
 function setupDatabase(){
-    return storage.posts.ensureIndex({'coordinates': '2d'}, {min: 0, max: 1});
+    return storage.posts.ensureIndexAsync({'coordinates': '2d'}, {min: 0, max: 1});
 }
 
 

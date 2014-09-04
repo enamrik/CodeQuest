@@ -5,15 +5,17 @@ var storage = require('../storage'),
 function Blog(){}
 
 Blog.prototype.lastPost = function(){
-   return this.store.posts.findOne({}, {"sort":[["postedOn", "desc"]]});
-}
+    return this.store.posts.findOneAsync({}, {"sort": [
+        ["postedOn", "desc"]
+    ]});
+};
 
 Blog.prototype.postsCloseTo = function(position){
-    return this.store.posts.find({ 'coordinates':{ $near : [ position, 0]} }).limit(5).toArray();
-}
+    return this.store.posts.find({ 'coordinates': { $near: [ position, 0]} }).limit(5).toArrayAsync();
+};
 
 Blog.prototype.getPostByShortTitle = function(shortTile){
-    return this.store.posts.findOne({ 'shortTitle': shortTile});
+    return this.store.posts.findOneAsync({ 'shortTitle': shortTile});
 };
 
 Blog.prototype.getPostsByPhrase = function(searchPhrase){
@@ -26,7 +28,9 @@ Blog.prototype.getPostsByPhrase = function(searchPhrase){
       query.push({'title':{$regex: '.*' + part + '.*', $options:'i'}})
     });
     if(query.length > 0){
-        return this.store.posts.find({ $or: query}, {"sort":[["postedOn", "desc"]]}).toArray();
+        return this.store.posts.find({ $or: query}, {"sort": [
+            ["postedOn", "desc"]
+        ]}).toArrayAsync();
     }else{
         return this.lastPost().then(function(post){
             return self.postsCloseTo(new Post(post).location());

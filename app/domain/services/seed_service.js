@@ -8,20 +8,22 @@ var db = require('./../storage'),
 
 function seedDatabase(){
     return glob(__dirname + '/../../seed/posts/*.md')
-        .then(function(files){
-            return Promise.map(files, function(file){
-                return readFile(file, 'utf-8')
-                    .then(markdown.toHTML)
-                    .then(function(markdown){
-                        return insertNewPost(file, markdown)
-                    });
-            });
-        });
+        .then(mapFilesToPosts);
 }
 
-function insertNewPost(file, markdown){
-    var post = newPost(file, markdown);
-    return db.posts.insert(post).then(function(){
+function mapFilesToPosts(files) {
+    return Promise.map(files, function (file) {
+        return readFile(file, 'utf-8')
+            .then(markdown.toHTML)
+            .then(function (html) {
+                return insertNewPost(file, html)
+            });
+    });
+}
+
+function insertNewPost(file, html) {
+    var post = newPost(file, html);
+    return db.posts.insertAsync(post).then(function () {
         console.log("[DEBUG] inserted post ", post.title);
     });
 }
