@@ -66,7 +66,7 @@ function setupCluster(){
 }
 
 function connectToMongo(){
-    return storage.connect(['posts']);
+    return storage.connect("mongodb://localhost:27017/codequest", ['posts']);
 }
 
 function seedDatabase(){

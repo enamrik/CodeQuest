@@ -12,11 +12,11 @@ var Storage = function(){
     this.collections = null;
 };
 
-Storage.prototype.connect = function(collections){
+Storage.prototype.connect = function(connectionString, collections){
     var self = this;
     self.collections = collections;
 
-    return mongo.MongoClient.connectAsync("mongodb://localhost:27017/codequest")
+    return mongo.MongoClient.connectAsync(connectionString)
         .then(function(db){
             self.db = db;
             self.collections.forEach(function(name){

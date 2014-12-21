@@ -20,7 +20,7 @@
     "knockout.mapping": "^2.4.2",
     "markdown": "^0.5.0",
     "moment": "^2.7.0",
-      "mongodb": "^1.4.9",
+    "mongodb": "^1.4.9",
     "restler": "^3.2.2",
     "rimraf": "^2.2.8",
     "serve-favicon": "^2.0.1",
