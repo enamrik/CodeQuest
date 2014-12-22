@@ -11,4 +11,4 @@ EXPOSE 3000
 EXPOSE 8080
 EXPOSE 5858
 
-ENTRYPOINT sh /src/dev_container_entrypoint.sh
+ENTRYPOINT sh /src/container_entrypoint.sh
