@@ -23,9 +23,8 @@ function mapFilesToPosts(files) {
 
 function insertNewPost(file, html) {
     var post = newPost(file, html);
-    return db.posts.insertAsync(post).then(function () {
-        console.log("[DEBUG] inserted post ", post.title);
-    });
+    console.log("[DEBUG] inserted post ", post.title);
+    return db.posts.insertAsync(post);
 }
 
 function newPost(seedFile, markdown){
