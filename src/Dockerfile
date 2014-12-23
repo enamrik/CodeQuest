@@ -1,4 +1,4 @@
-FROM codequest-base
+FROM codequest_base
 
 RUN npm install node-inspector -g
 
