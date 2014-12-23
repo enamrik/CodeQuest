@@ -1,4 +1,3 @@
-
 class BaseImage
     attr_accessor :docker
 

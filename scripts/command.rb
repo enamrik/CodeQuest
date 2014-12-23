@@ -14,6 +14,12 @@ module Command
             Open3.popen3(command) do |stdin, stdout, stderr, thread|
 
                 Thread.new do
+                  until (raw_line = stdin.gets).nil? do
+                    if options[:stream_out] then puts "i: #{raw_line}" end
+                  end
+                end
+
+                Thread.new do
                   until (raw_line = stderr.gets).nil? do
                     if options[:stream_out] then puts "e: #{raw_line}" end
                     data[:err] << raw_line

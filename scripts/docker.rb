@@ -60,7 +60,7 @@ class Docker
 
         unless boot2docker_running?
             puts 'boot2docker VM not running. Booting VM...'
-            Command.run('boot2docker up')
+            Command.run('boot2docker up', stream_out: true)
         end
     end
 
