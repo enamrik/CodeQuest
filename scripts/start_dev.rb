@@ -14,7 +14,6 @@ class StartDev
 
         create_dev_image
         remove_existing_container
-        start_browser
         create_run_container
     end
 
@@ -37,15 +36,6 @@ class StartDev
             puts "codequest_dev image hasn't been built yet. Building..."
             context_path = File.expand_path(File.dirname(__FILE__))
             docker.build("-t codequest_dev #{context_path}")
-        end
-    end
-
-    def start_browser
-        Thread.new do
-            puts "Running thread"
-            sleep 1.5
-            chrome_path = Shellwords.escape("/Applications/Google Chrome.app")
-            `open #{chrome_path} http://localhost:3000 http://localhost:8080/debug?port=5858`
         end
     end
 end
