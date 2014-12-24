@@ -1,15 +1,14 @@
 class Application
     class << self
-        def name
-            'codequest'
-        end
+        def name; 'codequest' end
+        def author; 'enamrik' end
 
         def named_version
-            "#{name}_v#{Version.current}"
+            "#{author}/#{name}:#{Version.current}"
         end
 
         def next_named_version
-            "#{name}_v#{Version.next}"
+            "#{author}/#{name}:#{Version.next}"
         end
     end
 end

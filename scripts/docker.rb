@@ -1,6 +1,6 @@
 class Docker
-    def initialize(options)
-        setup_boot2docker_ports options[:ports]
+    def initialize(options = {})
+        setup_boot2docker_ports(options[:ports] || [])
         setup_docker_environment
     end
 
@@ -16,15 +16,15 @@ class Docker
         exec('images').include? image_name
     end
 
-    def container_exists?(container_name)
-        exec('ps -a').include? container_name
-    end
-
     def remove_image(image_name)
         if image_exists? image_name
             puts "Removing #{image_name} image..."
             exec("rmi #{image_name}")
         end
+    end
+
+    def container_exists?(container_name)
+        exec('ps -a').include? container_name
     end
 
     def remove_container(container_name)
@@ -59,7 +59,7 @@ class Docker
         }
 
         if ports_to_expose.any?
-            puts "Could not find port forward entries #{}. Preparing to add..."
+            puts "Could not find port forward entries #{ports_to_expose.join(", ")}. Preparing to add..."
 
             if boot2docker_running?
                 puts 'Shutting down VM...'
@@ -79,7 +79,7 @@ class Docker
     end
 
     def port_forward_entry_exists_for(port)
-        Command.run('VBoxManage showvminfo "boot2docker-vm"').include? "tcp-port#{port}"
+        Command.run('VBoxManage showvminfo "boot2docker-vm"').include? "tcp-port#{port},"
     end
 
     def boot2docker_running?

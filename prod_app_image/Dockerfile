@@ -1,4 +1,4 @@
-FROM codequest_base
+FROM enamrik/codequest_base:1
 
 COPY . /src
 
