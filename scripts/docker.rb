@@ -1,5 +1,5 @@
 class Docker
-    def setup_with(options)
+    def initialize(options)
         setup_boot2docker_ports options[:ports]
         setup_docker_environment
     end
@@ -18,6 +18,20 @@ class Docker
 
     def container_exists?(container_name)
         exec('ps -a').include? container_name
+    end
+
+    def remove_image(image_name)
+        if image_exists? image_name
+            puts "Removing #{image_name} image..."
+            exec("rmi #{image_name}")
+        end
+    end
+
+    def remove_container(container_name)
+        if container_exists? container_name
+            puts "Removing #{container_name} container..."
+            exec("rm -f #{container_name}")
+        end
     end
 
     def exec(command, options = {})

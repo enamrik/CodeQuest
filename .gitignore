@@ -27,5 +27,9 @@ node_modules
 # Built content
 app/public/
 
+!product_app_image/Dockerfile
+!product_app_image/container_entrypoint.sh
+product_app_image/
+
 # WebStorm
 .idea/
