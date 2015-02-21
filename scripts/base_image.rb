@@ -1,9 +1,13 @@
+require 'docker'
+require_relative 'application'
+
 class BaseImage
     attr_accessor :docker
 
-    def initialize(docker)
-        @docker = docker
+    def initialize
+        @docker = Docker.new
     end
+    
     def build_if_missing
         unless docker.image_exists? base_image_name
             puts "#{base_image_name} image hasn\'t been built yet. Building..."

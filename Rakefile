@@ -1,22 +1,28 @@
-Dir["./scripts/*.rb"].each {|file| require file }
+require 'rubygems'
+require 'bundler/setup'
 
-desc "prepare environment and start development server"
+require_relative 'scripts/dev_server'
+require_relative 'scripts/deployment'
+
+desc 'prepare environment and start development server'
 task :start_dev_server do
     DevServer.new.start
 end
 
-desc "build base image"
+desc 'build base image'
 task :build_base_image do
-    BaseImage.new(Docker.new).build_if_missing
+    BaseImage.new.build_if_missing
 end
 
-desc "deploy to production"
-task :deploy_to_prod, [:up_version] do |task, args|
+desc 'build production image'
+task :deploy_to_prod, [:up_version] do |_, args|
     args.with_defaults(up_version: false)
-    Deployment.new.deploy_to_prod(keep_version: !args[:up_version])
+    Deployment.new.build_prod_image args[:up_version]
 end
 
-desc "run local prod build"
+desc 'run local prod build'
 task :run_prod do
     Deployment.new.try_prod_locally
 end
+
+task default: [:start_dev_server]

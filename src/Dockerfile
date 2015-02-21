@@ -1,6 +1,6 @@
 FROM enamrik/codequest_base:1
 
-RUN npm install node-inspector -g
+RUN npm install node-inspector -g --web-port 8090
 
 RUN npm install forever -g
 
@@ -8,7 +8,7 @@ RUN npm install forever -g
 EXPOSE 3000
 
 # Node debug
-EXPOSE 8080
+EXPOSE 8090
 EXPOSE 5858
 
 ENTRYPOINT sh /src/container_entrypoint.sh

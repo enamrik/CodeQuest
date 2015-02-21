@@ -33,3 +33,4 @@ product_app_image/
 
 # WebStorm
 .idea/
+*.iml

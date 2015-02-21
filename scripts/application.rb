@@ -1,3 +1,5 @@
+require_relative 'version'
+
 class Application
     class << self
         def name; 'codequest' end
