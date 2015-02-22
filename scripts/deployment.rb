@@ -3,34 +3,61 @@ require_relative 'application'
 require_relative 'version'
 
 class Deployment
-    attr_reader :app_path, :docker, :app_port
+  attr_reader :app_path, :docker, :app_port
 
-    def initialize
-        @app_port = 80
-        @docker = Docker.new ports: [app_port]
-        @app_path = File.expand_path("#{File.dirname(__FILE__)}/../")
+  def initialize
+    @app_port = 3000
+    @docker = Docker.new ports: [app_port, 8090, 5858]
+    @app_path = File.expand_path("#{File.dirname(__FILE__)}/../")
+    @prod_container_name = 'codequest_prod'
+  end
+
+  def run_prod
+    build_prod_image_if_not_build
+    docker.run(@prod_container_name, "-d -p #{app_port}:#{app_port} #{Application.named_version}", remove_if_exists: true)
+  end
+
+  def debug_prod
+    build_prod_debug_image
+    docker.run('codequest_prod_debug', 
+               "-v #{app_path}/src:/src -d -P -p 8090:8090 -p 5858:5858 -p #{app_port}:#{app_port} codequest_prod_debug",
+               remove_if_exists: true)
+    
+    puts "\n"
+    puts 'Container codequest_prod_debug is now running node-inspector against a prod image.'
+    puts 'Go to http://127.0.0.1:8090/debug?port=5858 to to access node-inspector.'
+    puts 'Run "source ./scripts/debug_prod.sh" to start codequest in container codequest_prod_debug in debug mode.'
+  end
+  
+  def build_prod_debug_image
+    build_prod_image_if_not_build
+    image_name = 'codequest_prod_debug'
+
+    unless docker.image_exists? image_name
+      puts "Building #{image_name} image..."
+      docker.build("-t #{image_name} #{app_path}/scripts/debug_prod")
     end
-
-    def try_prod_locally
-        docker.run(Application.name, "--rm -it -P -p 3000:#{app_port} #{Application.named_version}", remove_if_exists: true)
+  end
+  
+  def build_prod_image_if_not_build
+    unless docker.image_exists? Application.named_version
+      puts "Production image #{Application.named_version} hasn't been build yet. Building..."
+      build_prod_image
     end
+  end
 
-    def build_prod_image(up_version)
-        app_folder = "#{app_path}/src"
-        deploy_folder = "#{app_path}/prod_app_image"
+  def build_prod_image(up_version = false)
+    docker.remove_container @prod_container_name
 
-        excludes = '--exclude=container_entrypoint.sh --exclude=Dockerfile --exclude=app/content'
-        puts 'Copying files to container folder...'
-        `rsync -a #{excludes}  #{app_folder}/ #{deploy_folder}`
+    prod_image_name = prod_image_name up_version
+    docker.remove_image prod_image_name
+    puts "Building #{prod_image_name} image..."
+    docker.build("-t #{prod_image_name} #{app_path}/src")
+    docker.tag_as_latest prod_image_name
+    Version.up if up_version
+  end
 
-        prod_image_name = prod_image_name up_version
-        docker.remove_image prod_image_name
-        puts "Building #{prod_image_name} image..."
-        docker.build("-t #{prod_image_name} #{app_path}/prod_app_image")
-        Version.up if up_version
-    end
-
-    def prod_image_name(up_version)
-        up_version ? Application.next_named_version : Application.named_version
-    end
+  def prod_image_name(up_version)
+    up_version ? Application.next_named_version : Application.named_version
+  end
 end

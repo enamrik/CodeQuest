@@ -1,0 +1,22 @@
+GIT
+  remote: https://github.com/enamrik/run_command.git
+  revision: 16311c5ee64b05985c6ca176b1dc70b5e28c9206
+  specs:
+    command (1.0.0)
+
+GIT
+  remote: https://github.com/enamrik/run_docker.git
+  revision: abd49cfb31c39b564811f8045c31ffb50d3ce2f3
+  specs:
+    docker (1.0.12)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  command!
+  docker!
