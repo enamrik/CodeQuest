@@ -1,6 +1,7 @@
 require 'docker'
 require_relative 'application'
 require_relative 'version'
+require 'fileutils'
 
 class Deployment
   attr_reader :app_path, :docker, :app_port
@@ -10,6 +11,15 @@ class Deployment
     @docker = Docker.new ports: [app_port, 8090, 5858]
     @app_path = File.expand_path("#{File.dirname(__FILE__)}/../")
     @prod_container_name = 'codequest_prod'
+  end
+
+  def package
+    build_prod_image_if_not_build
+
+    puts 'Building production tarball...'
+    directory_name = File.expand_path('~/releases')
+    Dir.mkdir(directory_name) unless File.exists?(directory_name)
+    docker.exec("save -o #{directory_name}/codequest-#{Version.current}.tar #{Application.named_latest}")
   end
 
   def run_prod

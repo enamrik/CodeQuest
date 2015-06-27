@@ -19,4 +19,9 @@ task :debug do
   Deployment.new.debug_prod
 end
 
+desc 'create prod tarball'
+task :package do
+  Deployment.new.package
+end
+
 task default: [:debug]
