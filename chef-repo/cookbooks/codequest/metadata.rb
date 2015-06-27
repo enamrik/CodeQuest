@@ -1,4 +1,4 @@
 name 'codequest'
 version '1.0.0'
 
-depends 'nodejs'
+depends 'docker', '~> 0.37.0'

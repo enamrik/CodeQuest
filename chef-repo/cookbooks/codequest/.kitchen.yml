@@ -1,9 +1,11 @@
 ---
 driver:
   name: vagrant
+  network:
+    - ["forwarded_port", {guest: 80, host: 5050}]
 
 provisioner:
-  name: chef_solo
+  name: chef_zero
 
 platforms:
   - name: ubuntu-14.04
