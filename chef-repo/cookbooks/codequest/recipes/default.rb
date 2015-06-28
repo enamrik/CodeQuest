@@ -1,5 +1,3 @@
-include_recipe 'docker'
-
 execute 'docker-login' do
   command "docker login -e #{node['docker_hub']['email']} -p \"#{node['docker_hub']['password']}\" -u #{node['docker_hub']['username']}"
 end
