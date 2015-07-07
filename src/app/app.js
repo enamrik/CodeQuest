@@ -42,6 +42,7 @@ function initialize(){
     app.set('view engine', 'jade');
     app.use('/static', express.static(path.join(__dirname, 'public')));
     app.use('/', require('./routes/blog'));
+    app.use('/health', require('./routes/health'));
 
     console.log("Connecting pid=%j on port %j...", process.pid, port);
 
