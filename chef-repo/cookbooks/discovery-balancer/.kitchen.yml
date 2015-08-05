@@ -1,0 +1,19 @@
+---
+driver:
+  name: vagrant
+  network:
+    - ["forwarded_port", {guest: 80, host: 5051}]
+    - ["forwarded_port", {guest: 8500, host: 8500}]
+    - ["forwarded_port", {guest: 8600, host: 8600}]
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: ubuntu-14.04
+
+suites:
+  - name: discovery-balancer
+    run_list:
+      - recipe[discovery-balancer::default]
+    attributes:
